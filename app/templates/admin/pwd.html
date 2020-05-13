@@ -1,0 +1,55 @@
+{% extends 'admin/admin.html' %}
+
+{% block content %}
+    <!--内容-->
+    <section class="content-header">
+        <h1>微电影管理系统</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 个人资料</a></li>
+            <li class="active">修改密码</li>
+        </ol>
+    </section>
+    <section class="content" id="showcontent">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    {% for get_flash_message in get_flashed_messages(category_filter=["ok"]) %}
+                        <div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                            </button>
+                            <h4><i class="icon fa fa-check"></i> 操作成功!</h4>
+                            {{ get_flash_message }}
+                        </div>
+                    {% endfor %}
+                    <div class="box-header with-border">
+                        <h3 class="box-title">修改密码</h3>
+                    </div>
+                    <form role="form" method="post">
+                        <div class="box-body">
+                            <div class="form-group">
+                                {{ form.old_password.label(for="input_pwd") }}
+                                {{ form.old_password }}
+                                {% for error in form.old_password.errors %}
+                                    <div class="col-md-12" style="color: red;">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.new_password.label(for="input_newpwd") }}
+                                {{ form.new_password }}
+                                {% for error in form.new_password.errors %}
+                                    <div class="col-md-12" style="color: red;">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            {{ form.csrf_token }}
+                            {{ form.submit }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--内容-->
+{% endblock %}
+

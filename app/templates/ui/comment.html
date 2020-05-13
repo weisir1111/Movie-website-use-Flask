@@ -1,0 +1,33 @@
+{% macro render_paginate(pagination, endpoint,id) %}
+    {% if pagination %}
+        <div aria-label="Page navigation">
+            <ul class="pagination">
+                <li><a href="{{ url_for(endpoint, page=1, id=id) }}">首页</a></li>
+                {% if pagination.has_prev %}
+                    <li><a href="{{ url_for(endpoint, page=pagination.prev_num, id=id) }}">上一页</a></li>
+                {% else %}
+                    <li><a class="disabled">上一页</a></li>
+                {% endif %}
+
+                {% for page in pagination.iter_pages() %}
+                    {% if page %}
+                        {% if page != pagination.page %}
+                            <li><a href="{{ url_for(endpoint, page=page, id=id) }}">{{ page }}</a></li>
+                        {% else %}
+                            <li class="active"><a>{{ page }}</a></li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if pagination.has_next %}
+                    <li><a href="{{ url_for(endpoint, page=pagination.next_num, id=id) }}">下一页</a></li>
+                {% else %}
+                    <li><a class="disabled">下一页</a></li>
+                {% endif %}
+
+                <li><a href="{{ url_for(endpoint, page=pagination.pages, id=id) }}">尾页</a></li>
+            </ul>
+        </div>
+    {% endif %}
+{% endmacro %}
+
